@@ -1,0 +1,162 @@
+version: '3.2'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.8.9-management
+    volumes:
+      - /media/NewHDD/iot/.docker/rabbitmq/etc/:/var/run/rabbitmq/
+      - /media/NewHDD/iot/.docker/rabbitmq/data/:/var/lib/rabbitmq/
+      - /media/NewHDD/iot/.docker/rabbitmq/logs/:/var/log/rabbitmq/
+    ports:
+      - 15654:15672
+      - 15655:5672
+    environment:
+      # provide your credentials here
+      - RABBITMQ_DEFAULT_PASS=fdjfj123asd11
+      - RABBITMQ_DEFAULT_USER=thanglongtcd
+    networks:
+      - iot
+    restart: always
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '3316:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=iot
+      - MONGO_INITDB_ROOT_PASSWORD=f217s18AhSd
+    command: mongod
+    volumes:
+      - /media/NewHDD/iot/mongo-data:/data/db
+    networks:
+      - iot
+    restart: always
+  redis:
+    image: "redis:alpine"
+
+    ports:
+      - "6379"
+    volumes:
+      - /media/NewHDD/erp/redis-data:/var/lib/redis
+      - /media/NewHDD/erp/redis.conf:/usr/local/etc/redis/redis.conf
+      - /media/NewHDD/erp/redis-dt:/data
+    restart: always
+    cpus: "0.6"
+    mem_limit: 16G
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - iot
+  user:
+    image: "iot-user:latest"
+    ports:
+      - '3303:3000'
+    environment:
+      PORT: '3000'
+      TZ: 'Asia/Bangkok'
+      DB: 'iot-user'
+      DB_USER: 'iot'
+      DB_PASS: 'f217s18AhSd'
+      DB_SERVERS: 'mongodb:27017'
+      RABBIT_HOST: 'rabbitmq'
+      RABBIT_PORT: '5672'
+      RABBIT_USER: 'thanglongtcd'
+      RABBIT_PASS: 'fdjfj123asd11'
+      REDIS_DB: "5"
+      REDIS_PORT: "6379"
+      REDIS_HOST: "redis"
+      SECRET_KEY: 'cur$$123$$jl1haG'
+      EXPIRE_TOKEN: '100y'
+      SECRET_KEY_CMS: 'cur$$1223456ABC@!$$jl1haG'
+      AUTHORIZATION_CMS_URL: "http://authorization:3000/authorization"
+      INTERNAL_TOKEN: '123'
+      BLOCK_TOKEN: 'cur$$234$$jl1haG'
+    networks:
+      - iot
+    restart: always
+  authorization:
+    image: "iot-authorization:latest"
+    ports:
+      - '3304:3000'
+    environment:
+      PORT: '3000'
+      TZ: 'Asia/Bangkok'
+      DB: 'iot-auth'
+      DB_USER: 'iot'
+      DB_PASS: 'f217s18AhSd'
+      DB_SERVERS: 'mongodb:27017'
+      RABBIT_HOST: 'rabbitmq'
+      RABBIT_PORT: '5672'
+      RABBIT_USER: 'thanglongtcd'
+      RABBIT_PASS: 'fdjfj123asd11'
+      EXPIRE_TOKEN: '100y'
+      SECRET_KEY : 'cur$$1223456ABC@!$$jl1haG'
+      AUTHORIZATION_CMS_URL: "http://authorization:3000/authorization"
+      INTERNAL_TOKEN: '123'
+    networks:
+      - iot
+    restart: always
+  upload:
+    image: "iot-upload:latest"
+    ports:
+      - '3310:3000'
+    environment:
+      PORT: '3000'
+      DEST_LOCATION: '/uploads'
+      SECRET_KEY : 'cur$$123$$jl1haG'
+      SECRET_KEY_CMS: 'cur$$1223456ABC@!$$jl1haG'
+      INTERNAL_TOKEN: '123'
+    networks:
+      - iot
+    restart: always
+    volumes:
+      - /media/NewHDD/iot/uploadFolder:/uploads
+  core:
+    image: "iot-core:latest"
+    ports:
+      - '3300:3000'
+      - '3307:8007'
+      - '3383:1883'
+    environment:
+      PORT: '3000'
+      TZ: 'Asia/Bangkok'
+      REDIS_DB: "2"
+      REDIS_PORT: "6379"
+      PORTMQTT: "8007"
+      WEBPORTMQTT: "1883"
+      REDIS_HOST: "redis"
+      SECRET_KEY: 'cur$$123$$jl1haG'
+      CUSTOMER_URL: 'http://user:3000'
+      DB: 'iot-auth'
+      DB_USER: 'iot'
+      DB_PASS: 'f217s18AhSd'
+      DB_SERVERS: 'mongodb:27017'
+      RABBIT_HOST: 'rabbitmq'
+      RABBIT_PORT: '5672'
+      RABBIT_USER: 'thanglongtcd'
+      RABBIT_PASS: 'fdjfj123asd11'
+      EXPIRE_TOKEN: '100y'
+      AUTHORIZATION_URL: "http://user:3000/authorization"
+      INTERNAL_TOKEN: '123'
+    networks:
+      - iot
+    restart: always
+  worker-device:
+    image: "iot-worker-device:latest"
+    environment:
+      TZ: 'Asia/Bangkok'
+      RABBIT_HOST: 'rabbitmq'
+      RABBIT_PORT: '5672'
+      RABBIT_USER: 'thanglongtcd'
+      RABBIT_PASS: 'fdjfj123asd11'
+      QUEUE_NAME: 'iot:device'
+      EXCHANGE: 'device'
+      DB: 'iot-core'
+      DB_USER: 'iot'
+      DB_PASS: 'f217s18AhSd'
+      DB_SERVERS: 'mongodb:27017'
+    networks:
+      - iot
+    restart: always
+networks:
+  iot:
+    driver: bridge

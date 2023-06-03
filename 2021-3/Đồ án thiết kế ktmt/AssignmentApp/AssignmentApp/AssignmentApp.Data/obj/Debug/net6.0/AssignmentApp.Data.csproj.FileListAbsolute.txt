@@ -1,0 +1,14 @@
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\bin\Debug\net6.0\AssignmentApp.Data.deps.json
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\bin\Debug\net6.0\AssignmentApp.Data.runtimeconfig.json
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\bin\Debug\net6.0\AssignmentApp.Data.dll
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\bin\Debug\net6.0\AssignmentApp.Data.pdb
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\AssignmentApp.Data.csproj.AssemblyReference.cache
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\AssignmentApp.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\AssignmentApp.Data.AssemblyInfoInputs.cache
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\AssignmentApp.Data.AssemblyInfo.cs
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\AssignmentApp.Data.csproj.CoreCompileInputs.cache
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\AssignmentApp.Data.dll
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\refint\AssignmentApp.Data.dll
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\AssignmentApp.Data.pdb
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\AssignmentApp.Data.genruntimeconfig.cache
+D:\Workspace\2021-3\Đồ án thiết kế ktmt\AssignmentApp\AssignmentApp\AssignmentApp.Data\obj\Debug\net6.0\ref\AssignmentApp.Data.dll

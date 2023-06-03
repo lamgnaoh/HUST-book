@@ -1,0 +1,84 @@
+{
+  "project_info": {
+    "project_number": "150477201162",
+    "project_id": "iotcommunication-7622e",
+    "storage_bucket": "iotcommunication-7622e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150477201162:android:97a21b4bca82c4258364f3",
+        "android_client_info": {
+          "package_name": "vn.hust.soict.project.iot_communication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150477201162-e9c3fh82e49ffic3tfh49uak22lkdp6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.hust.soict.project.iot_communication",
+            "certificate_hash": "50f6dc65c16a93647859df78b83a8941e0265e64"
+          }
+        },
+        {
+          "client_id": "150477201162-h60ototdi1ljoor07c7c47avti6p4t1q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw0_UdJ8H6l3gkHQ4fcIU7fbt2eIsMI7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150477201162-h60ototdi1ljoor07c7c47avti6p4t1q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150477201162:android:1c2e724c69b85a628364f3",
+        "android_client_info": {
+          "package_name": "vn.hust.soict.project.iotcommunication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150477201162-m90iul8bbgkij0fdcpt3dmshr0m86l61.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.hust.soict.project.iotcommunication",
+            "certificate_hash": "50f6dc65c16a93647859df78b83a8941e0265e64"
+          }
+        },
+        {
+          "client_id": "150477201162-h60ototdi1ljoor07c7c47avti6p4t1q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw0_UdJ8H6l3gkHQ4fcIU7fbt2eIsMI7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150477201162-h60ototdi1ljoor07c7c47avti6p4t1q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
