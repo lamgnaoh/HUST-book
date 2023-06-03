@@ -1,0 +1,7 @@
+java –cp .;amqp-client-5.7.1.jar;slf4j-api-1.7.26.jar;slf4j-simple-1.7.26.jar RPCServer
+
+java –cp .;amqp-client-5.7.1.jar;slf4j-api-1.7.26.jar;slf4j-simple-1.7.26.jar RPCClient
+
+javac –cp amqp-client-5.7.1.jar RPCClient.java RPCServer.java
+
+rabbitmqctl.bat list_queues name messages_ready messages_unacknowledged

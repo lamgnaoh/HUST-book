@@ -1,0 +1,159 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+#header{
+
+}
+#header .header-content{
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-align: right;
+}
+#header .header-link{
+    display: inline-block;
+    padding-right: 15px;
+}
+#header .header-link a{
+    font-size: 13px;
+    text-decoration: none;
+    color: rgb(50, 150, 200);
+    padding: 0 0 0 15px;
+}
+#header .header-link a:hover{
+    text-decoration: underline;
+}
+#header .header-icon{
+    display: inline-block;
+    font-size: 20px;
+    padding-right: 14px;
+}
+#header #icon-app{
+    display: inline-block;
+}
+#header #icon-app a{
+    text-decoration: none;
+}
+#header #icon-account{
+    display: inline-block;
+}
+#header .header-icon a{
+    padding: 4px;
+}
+#header #account{
+    margin-left: 12px;
+}
+#header .header-icon a:hover{
+    background-color: rgba(232,234,237,0.08);
+}
+
+#content{
+    text-align: center;
+}
+#content #logo{
+    height: 202px;
+    position: relative;
+}
+#content #img-google{
+    height:92px;
+    vertical-align: bottom;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#search-tool #search-icon{
+    display: inline-block;
+    margin: 8px 0;
+}
+#search-form{
+    text-align: center;
+    padding: 20px;
+}
+
+#search-tool{
+    display: inline-block ;
+    width: 582px;
+    height: 44px;
+    padding: 5px 8px 0 14px;
+    border: 1px solid #ccc;
+
+}
+#search-tool input{
+    width: 448px;
+    height: 34px;
+    border: none;
+    /* line-height: 44px; */
+} 
+
+#search-tool #input-keyboard{
+    display: inline-block;
+    padding: 0 8px;
+}
+#search-tool #input-voice{
+    padding: 0 8px;
+    display: inline-block;
+    font-size: 20px;
+}
+#search-form .search-button{
+    padding-top: 18px;
+    height: 70px;
+}
+#search-form .search-button button{
+    border:1px solid #303134;
+    font-size: 14px;
+    height: 36px;
+    margin:12px 4px;
+    padding: 0 16px;
+    border-radius: 4px;
+}
+#content .body-footer{
+    width: 100%;
+    height: 245px;
+    text-align: center;
+    font-size: 13px;
+}
+#content .body-footer a{
+    text-decoration: none;
+    color: rgb(50, 150, 200);
+    padding: 0 3px;
+}
+#content .body-footer #celebration{
+    display: block;
+    margin-bottom: 32px;
+    
+}
+#footer{
+
+}
+#footer #region{
+    height: 48.6px;
+    padding: 15px 30px;
+    border-bottom: 1px solid #ccc;
+}
+#footer a{
+    padding: 15px;
+    font-size: 14px;
+    color: rgb(50, 150, 200);
+    text-decoration: none;
+}
+#footer #about{
+    height: 46.8px;
+    line-height: 46.8px;
+    padding:0 20px;
+    position: relative;
+}
+#footer .introduction{
+    display: inline-block;
+}
+#footer .security{
+    position: absolute;
+    display: inline-block;
+    right: 20px;
+}

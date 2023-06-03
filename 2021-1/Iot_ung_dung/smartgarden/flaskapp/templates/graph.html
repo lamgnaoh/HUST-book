@@ -1,0 +1,60 @@
+{% extends "navbar.html" %}
+{% block content %}
+<div class="content">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Nhiệt độ</h4>
+            <p class="category">Đồ thị nhiệt độ thời gian thực</p>
+          </div>
+          <div class="content">
+            <!-- sử dụng thư viện của chartjs de sinh ra bieu do  -->
+            <div id="tempChart" class="ct-chart ct-major-twelfth"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Độ ẩm</h4>
+            <p class="category">Đồ thị độ ẩm thời gian thực</p>
+          </div>
+          <div class="content">
+            <!-- sử dụng thư viện của chartjs de sinh ra bieu do  -->
+            <!-- ct-major-twelft : tỉ lệ của chart là 1:3 -->
+            <div id="humChart" class="ct-chart ct-major-twelfth"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Độ ẩm của đất</h4>
+            <p class="category">Đồ thị độ ẩm của đất thời gian thực</p>
+          </div>
+          <div class="content">
+            <!-- sử dụng thư viện của chartjs de sinh ra bieu do  -->
+            <div id="soilChart" class="ct-chart ct-major-twelfth"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Độ sáng</h4>
+            <p class="category">Đồ thị độ sáng thời gian thực</p>
+          </div>
+          <div class="content">
+            <!-- sử dụng thư viện của chartjs de sinh ra bieu do  -->
+            <div id="lightChart" class="ct-chart ct-major-twelfth"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock content %}

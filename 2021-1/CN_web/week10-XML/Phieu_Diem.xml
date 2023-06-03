@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PhieuDiem [
+    <!ELEMENT PhieuDiem (SinhVien,BangDiem)>
+    <!ELEMENT SinhVien (HoTen,Lop,DiaChi,GioiTinh,NgaySinh)>
+    <!ELEMENT BangDiem (MonHoc+)>
+    <!ELEMENT HoTen (#PCDATA)>
+    <!ELEMENT Lop (#PCDATA)>
+    <!ELEMENT DiaChi (#PCDATA)>
+    <!ELEMENT GioiTinh (#PCDATA)>
+    <!ELEMENT NgaySinh (#PCDATA)>
+    <!ELEMENT MonHoc (STT,TenMon,DienKy1,DienKy2,DienTB)>
+    <!ELEMENT STT (#PCDATA)>
+    <!ELEMENT TenMon (#PCDATA)>
+    <!ELEMENT DienKy1 (#PCDATA)>
+    <!ELEMENT DienKy2 (#PCDATA)>
+    <!ELEMENT DienTB (#PCDATA)>
+]>
+<PhieuDiem>
+        <SinhVien>
+            <HoTen>Nguyen Van Quan</HoTen>
+            <Lop>KTPMK10B</Lop>
+            <DiaChi>Bac Ninh</DiaChi>
+            <GioiTinh>Nam</GioiTinh>
+            <NgaySinh>31/12/1992</NgaySinh>
+        </SinhVien>
+         
+        <BangDiem>
+            <MonHoc>
+                <STT>1</STT>
+                <TenMon>XML</TenMon>
+                <DienKy1>10</DienKy1>
+                <DienKy2>10</DienKy2>
+                <DienTB>10</DienTB>
+            </MonHoc>
+             
+            <MonHoc>
+                <STT>2</STT>
+                <TenMon>Java</TenMon>
+                <DienKy1>10</DienKy1>
+                <DienKy2>10</DienKy2>
+                <DienTB>10</DienTB>
+            </MonHoc>
+        </BangDiem>
+    </PhieuDiem>
+ 

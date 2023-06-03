@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX demo</title>
+    <script>
+        function displayDateTimeString(){
+            var request = new XMLHttpRequest();
+            request.open('GET', '/time.php');
+            request.send();
+            request.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    document.getElementById("result").innerHTML = this.responseText;
+                }
+            }
+        }
+        function displayDateTimeHTML(){
+            var request = new XMLHttpRequest();
+            request.open('GET', '/timeHTML.php');
+            request.send();
+            request.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    document.getElementById("result").innerHTML = this.responseText;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="main">
+        <button id="1" onclick = "displayDateTimeString()">Button 1</button>
+        <button id="2" onclick = "displayDateTimeHTML()">Button 2</button>
+        <button id="3" onclick = "displayDateTimeXML()">Button 3</button>
+        <div id="result"></div>
+    </div>
+</body>
+</html>

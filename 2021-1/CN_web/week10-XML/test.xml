@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE result [
+    <!ELEMENT PhieuDiem (SinhVien,BangDiem)*>
+    <!ELEMENT SinhVien (HoTen,Lop,DiaChi,GioiTinh,NgaySinh)>
+    <!ATTLIST SinhVien 
+    HoTen CDATA #REQUIRED
+    Lop CDATA #REQUIRED
+    DiaChi CDATA #REQUIRED
+    GioiTinh CDATA #REQUIRED
+    NgaySinh CDATA #REQUIRED
+    >    
+]>

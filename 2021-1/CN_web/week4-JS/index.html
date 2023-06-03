@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyForm</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form id = "myForm" action="submit">
+        <label for="">
+            Enter your username:
+            <input id = "myUsername" placeholder = "Username ..." type="text" required>
+        </label>
+        
+        <label for="">
+            Enter your email:
+            <input id="email" type="email">
+        </label>
+        
+        <label for="">
+            Enter your phone number:
+            <input id ="phoneNumber" type="number">
+        </label>
+        <button id="formSubmitButton" type ="submit">Submit Form</button>
+    </form>
+</body>
+<script>
+    var username = document.getElementById("myUsername").value;
+    var submitBtn = document.getElementById("formSubmitButton");
+    console.log(submitBtn);
+    var myEmail = document.getElementById("email").value;
+    submitBtn.onclick = function() {
+        if(username == null){
+            alert("Please enter your username")
+        }
+    }
+
+
+</script>
+</html>
