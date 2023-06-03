@@ -1,0 +1,26 @@
+5-8, 9h30, d5-105
+tự luận
+tài liệu thoải mái
+
+1. Lý thuyết
+- Sự kiện ngẫu nhiên, phép thử ngẫu nhiên(nn), xs nn, phân bố nn, tiến trình nn, tiến trình đếm, tiến trình tăng trưởng độc lập, poison,...
+
+- Lý thuyết hàng đợi: Sơ đồ hệ thống hàng đợi, kí hiệu kendall, tt sinh tử, đli little, m/m/1/0, ...
+
+2. Bài tập
+- Tính toán: 
+	+ Btập tính toán đơn giản
+	+ Mở rộng: ví dụ trong thực tế các hệ thống nào có thể được mô hình hóa thành hệ thống hàng đợi, các tham số của nó... 
+	tự mở rộng và tính toán, 
+	ghi rõ từng bước 1 làm cái gì, 
+	đưa vào 1 vài hàm quan trọng khi code
+
+
+3. Mở rộng
+ví dụ: các bước lập trình mô phỏng hoạt động các thiết bị. 2 nhóm: 
+- Hub, switch briges 
+	??802.11
+	switch
+	802.3
+- router. OSPF, RIP
+	?? phải hiểu hoạt động từng bước, giải thích: input output buffer router, mô hình hoạt động stanford,...

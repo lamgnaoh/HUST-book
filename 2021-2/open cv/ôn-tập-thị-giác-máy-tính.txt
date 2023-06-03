@@ -1,0 +1,100 @@
+chương 1
+chương 2: thu nhận và biểu diễn ảnh số
+	- các khái niệm cơ bản
+	- thu nhận ảnh
+	- biểu diễn ảnh (color, gray, binary, ... )
+	- không gian màu RGB, yCrCb, HSV, lab, ...
+chương 3: các phương pháp xử lý
+	- xử lý ở mức điểm -> tăng cường độ tương phản trên ảnh
+		+ cân bằng histogram
+		+ kéo dãn histogram (biến đổi tuyến tính)
+		+ hiệu chỉnh gama
+		+ log
+	- xử lý / biến đổi cục bộ:
+		+ phép nhân chập
+		+ bộ lọc tuyến tính sử nhân chập 
+		(lọc nhiễu: gaussian, trung bình ( lọc thông thấp ), ..., đạo hàm bậc 1 (sobel, prewitt, robert), bậc 2 laplacian (lọc thông cao) )	
+		+ bộ lọc phi tuyến:
+			trung vị: 
+			max:
+			min:
+	- một số phép toán số học cơ bản:
+		+ số học +, -, x
+		+ logic: and, or, not
+		+ ảnh nhị phân & một số phép toán trên ảnh nhị phân
+			* lấy ngưỡng
+			* phép biến đổi hình thái (co giãn đóng mở)
+			* gán nhãn thành phần liên thông
+	- xử lý trong miền không gian tần số:
+chương 4: đặc trưng & so khớp ảnh:
+	- phát hiện các biên, đường thẳng, đường cơ bản, ...
+		+ đạo hàm bậc 1 --> ngưỡng
+		+ đạo hàm bậc 2 --> tìm điểm qua 0
+		+ bộ phát hiện canny (hàm bậc 1) 
+		+ đánh nhãn cho biên
+		+ phát hiện đường thẳng: biến đổi hough/ransac
+	- trích chọn đặc trưng: toàn cục, cục bộ
+		+ đặc trưng: color (histogram), kết cấu (ma trận đồng xh & haralick), hình dáng (this moment ), dựa trên thông tin gradient (HOH, HOG, ... )
+		+ vùng cục bộ: 
+		+ phát hiện keypoint: bộ phát hiện góc Haris/Haris Laplacian, DOG detector (swift)
+		+ đặc trưng cục bộ tại keypoint:
+			* xác định vùng
+			* tính biểu diễn cục bộ: SWIFT: hướng đạo hàm
+			* so khớp đường cục bộ: KNN , ràng buộc: ngường, distance , homegraphy
+		+ 
+chương 5: phân vùng:
+	- lấy ngưỡng:	
+	- clustering (k-means, mean-shift, .... )
+	- region-based: split and merge / region grawing
+	- conton-based: water-shed
+	- hybrid
+chương 6: motion & tracking
+	- optical flow: lucas-kanade, how
+	- phát hiện chuyển động: trừ nền / xây dựng nền
+	- tracking: kalman / phát hiện đối tượng và matching
+	- 1 object vs nhiều objects
+chương 7: nhận dạng & phát hiện đối tượng
+	- nhận dạng: 
+		+ biểu diễn đối tượng ( trích chọn đặc trưng: đặc trưng toàn cục, đặc trưng cục bộ, Bag of Words )
+			* bag of words: 
+			-> trích chọn đặc trưng cục bộ trên tập ảnh 
+			-> xây dựng từ điển trực quan 
+			-> biểu diễn lại thông qua từ điển (tf df, ... )
+		+ phân loại: KNN, SVM, Bayes, RandomForest, CNN
+		+ đánh giá độ đo
+	- phát hiện đối tượng
+	- sliding window -> phân loại cửa sổ: đặc trưng, phân loại
+	- face detection - viora & john
+	- podestion detection
+	- thay đổi kích thước window -> thay đổi -> tìm vùng tiềm năng
+	- deep learning for cv
+		+ bài toán phân loại
+		+ phát hiện đối tượng: R CNN, Fast R CNN, ...
+		+ bài tập phân vùng ngữ nghĩa: FCN, Encoder:
+		+ độ đo hiệu năng 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
