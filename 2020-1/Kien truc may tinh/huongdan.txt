@@ -1,0 +1,36 @@
+-------------------------------------------------------------------------------
+CA-Jan2014v9.pdf
+-------------------------------------------------------------------------------
+ Bài giảng môn học Kiến Trúc Máy tính - IT3030.
+ Là tài liệu chính thức của học phần và là slide trình chiếu của giáo viên.
+
+-------------------------------------------------------------------------------
+MIPS_Green_Sheet.pdf
+-------------------------------------------------------------------------------
+ Tài liệu tra cứu tập lệnh của bộ xử lý MIPS. Tài liệu thường áp dụng để lập 
+ trình hợp ngữ cho MIPS, hoặc phân giải lệnh hợp ngữ thành mã máy và ngược lại.
+ 
+ Tài liệu được sử dụng nhiều chương 5 Kiến trúc tập lệnh. Nên in ra giấy và
+ mang theo trong quá trình học để làm quen dần, tìm nhanh.
+ 
+ Đây là tài liệu duy nhất được phép mang vào phòng thi cuối kỳ.
+ 
+------------------------------------------------------------------------------- 
+TextbookCA
+------------------------------------------------------------------------------- 
+ Thư mục chứa các sách tham khảo.
+ 
+------------------------------------------------------------------------------- 
+Mars
+-------------------------------------------------------------------------------  
+ Công cụ giả lập bộ xử lý MARS. Công cụ cho phép lập trình hợp ngữ, chạy giả
+ lập và theo dõi giá trị thay đổi trên các thanh ghi, giả lập các thiết bị, cảm
+ biến đơn giản nối với MIPS.
+ 
+ Công cụ rất hữu hiệu, giúp hiểu rõ về tập lệnh (chương 5). Công cụ cho phép 
+ kiểm tra các đoạn hợp ngữ xem có đúng không. Công cụ cũng chuyển lệnh hợp ngữ
+ sang mã máy, giúp kiểm việc chuyển đổi mã máy có thực hiện đúng hay không.
+ 
+ MARS được lập trình bằng Java, nên có thể chạy được trên mọi hệ điều hành.
+ Để chạy MARS chỉ cần chạy file .jar là xong, không cần cài đặt.
+ 
