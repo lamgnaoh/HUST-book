@@ -1,0 +1,44 @@
+5. 
+a) Tuần hoàn -> Âm hữu thanh. (Không lặp lại -> Âm vô thanh)
+b) Sử dụng cửa sổ Hamming. Hamming và Hanning khác nhau ở chỗ Hamming khác 0
+   Giải thích: 
+   Tác dụng cửa sổ Hamming (1 câu): 
+   Tại sao dùng Hamming và Hanning trước khi FFT ngoài cửa sổ chữ nhật (câu
+   trả lời không chứa từ "xung đơn vị")
+c) - Nét mảnh: phổ biên độ
+   - Nét đậm: đường bao phổ (đáp ứng biên độ tuyến âm)
+   - Thông tin có từ hình c: phổ biên độ của âm hữu thanh, có 4 formant, 
+     tần số cực đại tầm 5 kHz bằng 1 nửa tần số lấy mẫu
+   - Từ hình b lấy biến đổi Fourier, tính biên độ lấy theo thang Decibel ra 
+     đường nét mảnh
+   Từ hình b có 2 phương pháp xác định đáp ứng biên độ tuyến âm -> formant:
+   LPC và đồng hình
+d) Dùng LPC và đồng hình, sau đó biến đổi Fourier: 
+   - LPC: tăng hệ số p của bộ lọc ảo để đường nét đậm d -> c
+   - Xử lý đồng hình: dùng cửa sô chọn số mẫu của H mũ. p tăng lên -> 
+     Cửa sổ rộng hơn -> tăng số mẫu H mũ lên
+
+Tại sao tiên đoán điều đã biết rồi?
+    Để đánh giá xem chính xác đến mức độ nào -> Dùng để dự đoán những cái 
+    chưa biết
+
+8)
+a) 
+   - Hình a: Âm hữu thanh (tuần hoàn)
+   - Hình b: đáp ứng biên độ của bộ lọc hiệu chỉnh
+   - Hình c: cửa sổ Hamming
+   - Hình d: Hình a sử dụng bộ lọc hiệu chỉnh ở hình b đi qua (nhân với) cửa
+     sổ Hamming
+   - Hình e: đáp ứng xung của bộ lọc đảo. p = 14 (mô hình AR có a0 = 1)
+   - Hình f: biến đổi Fourier của hình d, sau đố lấy phổ biên độ theo thang
+     Decibel
+- Bậc p thường ko lớn -> Số mẫu quá ít để biến đổi Fourier, nên ta thêm 
+  các mẫu = 0 ở cuối để thực hiện Fourier nhanh
+- Độ phân biệt phổ: Khoảng cách tần số 2 mẫu kề nhau
+- Tại sao sử dụng bộ lọc hiệu chỉnh: 
+
+Âm thanh ta nghe chứa các tần số cơ bản và các hài (bội) của nó và năng lượng tần số cơ bản
+cao hơn năng lượng của các hài của nó. Để biết tần số đi qua bộ lọc nào -> Năng lượng đầu ra
+bộ lọc nào lớn nhất
+
+Bài 19: thi cuối kì

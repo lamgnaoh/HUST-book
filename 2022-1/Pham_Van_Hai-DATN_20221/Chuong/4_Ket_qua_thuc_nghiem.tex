@@ -1,0 +1,599 @@
+\documentclass[../DoAn.tex]{subfiles}
+\begin{document}
+\raggedbottom
+Trong chương này sẽ trình bày chi tiết về việc xây dựng hệ thống từ lựa chọn kiến trúc, thiết kế tổng quan, thiết kế chi tiết về giao diện và cơ sở dữ liệu, xây dựng và triển khai hệ thống, kiểm thử một số trường hợp đặc biệt và cuối cùng là một số đánh giá về hệ thống.
+
+\section{Thiết kế kiến trúc}
+\subsection{Lựa chọn kiến trúc phần mềm}
+Phần mềm được phát triển dựa theo kiến trúc phân tầng. Cụ thể, kiến trúc này sẽ có 4 tầng là: Tầng trình bày (Presentation Layer), tầng nghiệp vụ (Business Logic Layer), tầng truy cập dữ liệu (Data Access Layer) và tầng lưu trữ dữ liệu (Database).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Hinhve/KienTrucHeThong.png}
+    \caption{Kiến trúc phân lớp của hệ thống}
+\end{figure}
+Vai trò cụ thể của các tầng như sau:
+
+Tầng trình bày: Làm nhiệm vụ giao tiếp với người dùng, hiển thị dữ liệu, nhận các tương tác của người dùng và biến đổi thành các sự kiện của hệ thống, kiểm tra tính đúng đắn của các dữ liệu đầu vào.
+
+Tầng nghiệp vụ: Tầng này giống như bộ não của hệ thống vậy. Là trung tâm điều phối các nghiệp vụ của hệ thống, kiểm soát quyền hạn truy cập, đảm bảo tính hợp lệ của dữ liệu.
+
+Tầng truy cập dữ liệu: Dữ liệu là một trong những phần quan trọng nhất của hệ thống và không nên thao tác trực tiếp với cơ sở dữ liệu từ tầng nghiệp vụ. Vì vậy tầng truy cập dữ liệu sinh ra nhằm tạo một lớp trung gian, giao tiếp với cơ sở dữ liệu và trả lại kết quả cho tầng nghiệp vụ.
+
+\subsection{Thiết kế tổng quan}
+Dựa trên thiết kế kiến trúc ở phía trên, dưới đây là thiết kế tổng quan của hệ thống:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Hinhve/KienTrucTongQuan.png}
+    \caption{Kiến trúc tổng quan}
+\end{figure}
+
+Gói \textbf{View}: Chứa các thành phần giao diện.
+\begin{longtable}{|p{0.1\textwidth}|p{0.3\textwidth}|p{0.5\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Thành phần} & \textbf{Mô tả} \\ \hline
+1   & Pages & Giao diện hoàn chỉnh được tạo thành từ nhiều thành phần con (component) \\ \hline
+2   & Components & Thành phần để cấu thành nên page \\ \hline
+\caption{Bảng mô tả gói View}
+\end{longtable}
+
+Gói \textbf{Controller}: Chứa các thành phần xử lý nghiệp vụ.
+\begin{longtable}{|p{0.05\textwidth}|p{0.35\textwidth}|p{0.5\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Thành phần} & \textbf{Mô tả} \\ \hline
+1   & AccountController & Xử lý nghiệp vụ liên quan đến tài khoản \\ \hline
+2   & CandidateController & Xử lý nghiệp vụ liên quan đến hồ sơ ứng viên \\ \hline
+3   & CheckinoutController & Xử lý nghiệp vụ liên quan đến thời gian checkin, checkout \\ \hline
+4   & DeliveryController & Xử lý nghiệp vụ liên quan đến khối quản lý \\ \hline
+5   & EducationController & Xử lý nghiệp vụ liên quan đến chương trình đào tạo \\ \hline
+6   & EmployeeController & Xử lý nghiệp vụ liên quan đến hồ sơ nhân viên  \\ \hline
+7   & FirebaseAccountController & Xử lý nghiệp vụ liên quan đến xác thực tài khoản bằng Firebase Authentication  \\ \hline
+8   & JobController & Xử lý nghiệp vụ liên quan đến công việc cần tuyển nhân sự  \\ \hline
+9   & LoginoutController & Xử lý nghiệp vụ liên quan đến đăng nhập, đăng xuất \\ \hline
+10   & PositionController & Xử lý nghiệp vụ liên quan đến vị trí công việc \\ \hline
+11   & RequestController & Xử lý nghiệp vụ liên quan đến request của nhân viên \\ \hline
+12   & StatisticsController & Xử lý nghiệp vụ liên quan đến thống kê dữ liệu \\ \hline
+13   & TestQuestionController & Xử lý nghiệp vụ liên quan đến câu hỏi \\ \hline
+14   & TestTopicController & Xử lý nghiệp vụ liên quan đến chủ đề câu hỏi \\ \hline
+15   & SkillTestController & Xử lý nghiệp vụ liên quan đến bài kiểm tra kỹ năng \\ \hline
+\caption{Bảng mô tả gói Controller}
+\end{longtable}
+
+Gói \textbf{Model}: Chứa các thành phần giao tiếp với cơ sở dữ liệu. Mỗi thành phần thực hiện giao tiếp với một bảng tương ứng trong cơ sở dữ liệu. Chi tiết về các bảng này sẽ được trình bày trong phần 4.2.2. 
+
+\section{Thiết kế chi tiết}
+\subsection{Thiết kế giao diện}
+Giao diện chính là bộ mặt của ứng dụng bởi đây là thành phần giao tiếp trực tiếp với người sử dụng. Nhằm tạo ra trải nghiệm toàn diện hơn, giao diện của ứng dụng hướng tới hỗ trợ nhiều kích cỡ màn hình khác nhau như màn hình laptop, màn hình máy tính bảng, màn hình điện thoại. Màu sắc là một trong những yếu tố mà em quan tâm nhất bởi em hiểu rằng, việc sử dụng các màu sắc mà không có sự tính toán sẽ làm cho giao diện bị rối và gây mất tập trung cho người sử dụng. Vì thế ứng dụng hướng tới sử dụng các màu sắc cơ bản, số lượng màu ít nhưng có sự phối hợp hài hòa với nhau và hài hòa trong bố cục của từng màn hình mà người dùng truy cập. Liên quan đến tính nhất quán, thiết kế của hệ thống có những chuẩn hóa nhất định. Dưới đây trình bày một số quy tắc cơ bản:
+\begin{itemize}
+    \item Tất cả các khối có hình chữ nhật (như là hình ảnh, thẻ, nút bấm, modal) đều phải được bo tròn
+    \item Các nút bấm chỉ sử dụng tối đa 3 kiểu màu sắc với 3 ý nghĩa: Hành động xóa, hành động xác nhận và các hành động khác
+    \item Ứng dụng chỉ sử dụng popup (hoặc modal) để thông báo, vị trí hiển thị là chính giữa màn hình hoặc bật lên từ trên cùng bên phải màn hình
+    \item Thay đổi con trỏ chuột thành hình trỏ ngón tay đối với những thành phần có sự kiện diễn ra sau khi nhấp chuột vào như một báo hiệu cho người dùng
+\end{itemize}
+
+\subsection{Thiết kế cơ sở dữ liệu}
+\subsubsection{Lược đồ cơ sở dữ liệu}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/LuocDoERD.png}
+    \caption{Lược đồ cơ sở dữ liệu}
+\end{figure}
+\subsubsection{Thiết kế các bảng dữ liệu}
+\textbf{Bảng "position" (Vị trí công việc)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của vị trí công việc & Khóa chính \\ \hline
+2   & name & varchar & Tên vị trí công việc & \\ \hline
+3   & description & text & Mô tả & \\ \hline
+4   & created\_at & date & Thời gian tạo vị trí công việc & \\ \hline
+5   & updated\_at & date & Thời gian cập nhật vị trí công việc & \\ \hline
+\caption{Bảng "position" (Vị trí công việc)}
+\end{longtable}
+
+\textbf{Bảng "job" (Công việc)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của công việc & Khóa chính \\ \hline
+2   & title & varchar & Tiêu đề của công việc & \\ \hline
+3   & type\_of\_job & int & Loại công việc & \\ \hline
+4   & up\_to & int & Tiền lương có thể đạt tới & \\ \hline
+5   & level & int & Yêu cầu kinh nghiệm & \\ \hline
+6   & job\_detail & text & Mô tả công việc & \\ \hline
+7   & position\_id & int & Id của vị trí công việc & Khóa ngoài tham chiếu bảng \textbf{position} \\ \hline
+\caption{Bảng "job" (Công việc)}
+\end{longtable}
+
+\textbf{Bảng "candidate" (Ứng viên)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.21\textwidth}|p{0.2\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của ứng viên & Khóa chính \\ \hline
+2   & name & varchar & Tên của ứng viên & \\ \hline
+3   & email & varchar & Email của ứng viên & \\ \hline
+4   & appointment\_time & date & Thời gian phỏng vấn & \\ \hline
+5   & cv\_link & varchar & Link CV của ứng viên & \\ \hline
+6   & assessment & int & Đánh giá ứng viên & \\ \hline
+7   & created\_at & date & Thời gian tạo bản ghi & \\ \hline
+8   & updated\_at & date & Thời gian cập nhật ứng viên & \\ \hline
+9   & interviewer\_id & int & Id của người phỏng vấn & Khóa ngoài tham chiếu bảng \textbf{employee} \\ \hline
+10   & job\_id & int & Id của công việc muốn ứng tuyển & Khóa ngoài tham chiếu bảng \textbf{job} \\ \hline
+\caption{Bảng "candidate" (Ứng viên)}
+\end{longtable}
+
+\textbf{Bảng "test\_topic" (Chủ đề câu hỏi)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của chủ đề câu hỏi & Khóa chính \\ \hline
+2   & name & varchar & Tên chủ đề câu hỏi & \\ \hline
+3   & description & text & Mô tả chủ đề câu hỏi & \\ \hline
+\caption{Bảng "test\_topic" (Chủ đề câu hỏi)}
+\end{longtable}
+
+\textbf{Bảng "test\_question" (Câu hỏi)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của câu hỏi & Khóa chính \\ \hline
+2   & question\_text & text & Nội dung câu hỏi & \\ \hline
+3   & question\_source & json & Nội dung mã nguồn (cho những câu hỏi liên quan đến lập trình) & \\ \hline
+4   & type & int & Loại câu hỏi & \\ \hline
+5   & level & int & Mức độ của câu hỏi & \\ \hline
+6   & options & json & Các lựa chọn trả lời của câu hỏi & \\ \hline
+7   & answer & json & Các đáp án đúng của câu hỏi & \\ \hline
+8   & topic\_id & int & Id của chủ đề câu hỏi & Khóa ngoài tham chiếu bảng \textbf{test\_topic} \\ \hline
+\caption{Bảng "test\_question" (Câu hỏi)}
+\end{longtable}
+
+\textbf{Bảng "skill\_test" (Bài kiểm tra kỹ năng)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của bài kiểm tra kỹ năng & Khóa chính \\ \hline
+2   & title & varchar & Tiêu đề của bài kiểm tra kỹ năng & \\ \hline
+3   & duration & int & Thời lượng của bài kiểm tra kỹ năng & \\ \hline
+\caption{Bảng "skill\_test" (Bài kiểm tra kỹ năng)}
+\end{longtable}
+
+\textbf{Bảng "employee\_account" (Tài khoản)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & email & varchar & Email của tài khoản & Khóa chính \\ \hline
+2   & password & varchar & Mật khẩu của tài khoản & \\ \hline
+3   & created\_at & date & Thời gian tạo bản ghi & \\ \hline
+4   & updated\_at & date & Thời gian cập nhật vị trí công việc & \\ \hline
+5   & employee\_id & int & Id của nhân viên sở hữu tài khoản & Khóa ngoài tham chiếu bảng \textbf{employee} \\ \hline
+6   & candidate\_id & int & Id của ứng viên sở hữu tài khoản & Khóa ngoài tham chiếu bảng \textbf{candidate} \\ \hline
+\caption{Bảng "employee\_account" (Tài khoản)}
+\end{longtable}
+
+\textbf{Bảng "account\_firebase" (Tài khoản liên kết Firebase)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của tài khoản & Khóa chính \\ \hline
+2   & uid & varchar & Mã định danh tài khoản Firebase & \\ \hline
+3   & google\_mail & varchar & Email của tài khoản Google & \\ \hline
+4   & created\_at & date & Thời gian tạo bản ghi & \\ \hline
+5   & updated\_at & date & Thời gian cập nhật tài khoản & \\ \hline
+6   & email & varchar & Email của tài khoản liên kết & Khóa ngoài tham chiếu bảng 
+\textbf{employee\_account} \\ \hline
+\caption{Bảng "account\_firebase" (Tài khoản liên kết Firebase)}
+\end{longtable}
+
+\textbf{Bảng "skill\_test\_account" (Liên kết Tài khoản - Bài kiểm tra kỹ năng)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của bản ghi & Khóa chính \\ \hline
+2   & score & int & Số câu trắc nghiệm đúng & \\ \hline
+3   & status & int & Trạng thái bài kiểm tra & \\ \hline
+4   & email & varchar & Email của tài khoản làm bài & Khóa ngoài tham chiếu bảng \textbf{employee\_account} \\ \hline
+5   & test\_id & int & Id của bài kiểm tra & Khóa ngoài tham chiếu bảng \textbf{skill\_test} \\ \hline
+\caption{Bảng "skill\_test\_account" (Liên kết Tài khoản - Bài kiểm tra kỹ năng)}
+\end{longtable}
+
+\textbf{Bảng "test\_question\_skill\_test" (Liên kết Câu hỏi - Bài kiểm tra kỹ năng)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & question\_id & int & Id của câu hỏi & Khóa ngoài tham chiếu bảng \textbf{test\_question} \\ \hline
+2   & test\_id & int & Id của bài kiểm tra kỹ năng & Khóa ngoài tham chiếu bảng \textbf{skill\_test} \\ \hline
+\caption{Bảng "test\_question\_skill\_test" (Liên kết Câu hỏi - Bài kiểm tra kỹ năng)}
+\end{longtable}
+
+\textbf{Bảng "skill\_test\_session\_answer" (Đáp án cho một câu hỏi của một bài kiểm tra kỹ năng)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.28\textwidth}|p{0.22\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & answer & json & Câu trả lời cho câu hỏi & \\ \hline
+2   & session\_id & int & Id của phiên làm bài kiểm tra kỹ năng & Khóa ngoài tham chiếu bảng \textbf{skill\_test\_account} \\ \hline
+3   & question\_id & int & Id câu hỏi & Khóa ngoài tham chiếu bảng \textbf{test\_question} \\ \hline
+\caption{Bảng "skill\_test\_session\_answer" (Đáp án cho một câu hỏi của một bài kiểm tra kỹ năng)}
+\end{longtable}
+
+\textbf{Bảng "delivery" (Khối quản lý)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của khối quản lý & \\ \hline
+2   & name & varchar & Tên của khối quản lý & \\ \hline
+3   & description & text & Mô tả về khối quản lý & \\ \hline
+4   & created\_at & date & Thời gian tạo khối quản lý & \\ \hline
+5   & updated\_at & date & Thời gian cập nhật khối quản lý & \\ \hline
+\caption{Bảng "delivery" (Khối quản lý)}
+\end{longtable}
+
+\textbf{Bảng "employee" (Nhân viên)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của khối quản lý & \\ \hline
+2   & first\_name & varchar & Tên gọi nhân viên & \\ \hline
+3   & middle\_name & varchar & Tên đệm của nhân viên & \\ \hline
+4   & last\_name & varchar & Họ của nhân viên & \\ \hline
+5   & phone\_number & varchar & Số điện thoại & \\ \hline
+6   & date\_of\_birth & date & Ngày sinh của nhân viên & \\ \hline
+7   & join\_date & date & Ngày chính thức làm việc tại công ty & \\ \hline
+8   & role & int & Vai trò (quyền hạn) của nhân viên & \\ \hline
+9   & paid\_leave\_count & int & Số ngày nghỉ phép hiện tại & \\ \hline
+10   & working\_status & int & Trạng thái làm việc của nhân viên & \\ \hline
+11   & avatar & varchar & Đường dẫn đến ảnh avatar của nhân viên & \\ \hline
+12   & created\_at & date & Thời gian tạo nhân viên & \\ \hline
+13   & updated\_at & date & Thời gian cập nhật nhân viên & \\ \hline
+14   & position\_id & int & Id của vị trí công việc & Khóa ngoài tham chiếu bảng 
+\textbf{position}\\ \hline
+\caption{Bảng "employee" (Nhân viên)}
+\end{longtable}
+
+\textbf{Bảng "delivery\_employee" (Liên kết Nhân viên - Khối quản lý)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & employee\_id & int & Id của nhân viên & Khóa ngoài tham chiếu bảng \textbf{employee} \\ \hline
+2   & delivery\_id & int & Id của khối quản lý & Khóa ngoài tham chiếu bảng \textbf{delivery} \\ \hline
+3   & is\_manager & boolean & Xác định nhân viên có phải là người quản lý khối không & \\ \hline
+4   & created\_at & date & Thời gian tạo bản ghi & \\ \hline
+\caption{Bảng "delivery\_employee" (Liên kết Nhân viên - Khối quản lý)}
+\end{longtable}
+
+\textbf{Bảng "check\_in\_out" (Check in, check out)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của bản ghi & Khóa chính \\ \hline
+2   & time & date & Thời gian check in/out & \\ \hline
+3   & type & int & Xác định bản ghi là check in hay check out & \\ \hline
+4   & employee\_id & int & Id của nhân viên & Khóa ngoài tham chiếu bảng \textbf{employee} \\ \hline
+\caption{Bảng "check\_in\_out" (Check in, check out)}
+\end{longtable}
+
+\textbf{Bảng "request"}
+\begin{longtable}{|p{0.05\textwidth}|p{0.23\textwidth}|p{0.15\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của bản ghi & Khóa chính \\ \hline
+2   & type & int & Loại request & \\ \hline
+3   & date & date & Ngày mong muốn tạo request & \\ \hline
+4   & duration & varchar & Mốc thời gian trong ngày tạo request & \\ \hline
+5   & reason & varchar & Lý do tạo request & \\ \hline
+6   & status & int & Trạng thái của request &\\ \hline
+7   & is\_cancelled & boolean & Xác định request đã từng bị nhân viên hủy chưa & \\ \hline
+8   & is\_admin\_reviewed & boolean & Xác định request đã từng được duyệt chưa & \\ \hline
+9   & created\_at & date & Thời gian tạo request & \\ \hline
+10   & employee\_id & int & Id của nhân viên tạo request & Khóa ngoài tham chiếu bảng \textbf{employee} \\ \hline
+\caption{Bảng "request"}
+\end{longtable}
+
+\textbf{Bảng "education\_program" (Chương trình đào tạo)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & id & int & Id của chương trình đào tạo & Khóa chính \\ \hline
+2   & title & varchar & Tiêu đề của chương trình đào tạo & \\ \hline
+3   & content & text & Nội dung của chương trình đào tạo & \\ \hline
+4   & time & date & Ngày và giờ diễn ra chương trình đào tạo & \\ \hline
+5   & duration & int & Thời lượng của chương trình đào tạo & \\ \hline
+6   & completed & boolean & Xác định chương trình đào tạo đã diễn ra hay chưa & \\ \hline
+7   & materials & json & Tập hợp các link tài liệu & \\ \hline
+8   & created\_at & date & Thời gian tạo chương trình đào tạo & \\ \hline
+9   & updated\_at & date & Thời gian cập nhật chương trình đào tạo & \\ \hline
+\caption{Bảng "education\_program" (Chương trình đào tạo)}
+\end{longtable}
+
+\textbf{Bảng "employee\_education" (Liên kết Nhân viên - Chương trình đào tạo)}
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.17\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Tên trường} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả } & \textbf{Ràng buộc} \\ \hline
+1   & is\_tutor & boolean & Xác định nhân viên có phải người trình bày trong chương trình đào tạo không & \\ \hline
+1   & rate & int & Đánh giá của nhân viên về chương trình đào tạo & \\ \hline
+2   & employee\_id & int & Id của nhân viên & Khóa ngoài tham chiếu bảng \textbf{employee} \\ \hline
+4   & program\_id & int & Id của chương trình đào tạo & Khóa ngoài tham chiếu bảng \textbf{education\_program} \\ \hline
+\caption{Bảng "employee\_education" (Liên kết Nhân viên - Chương trình đào tạo)}
+\end{longtable}
+
+\section{Xây dựng ứng dụng}
+\subsection{Thư viện và công cụ sử dụng}
+Trong quá trình xây dựng ứng dụng, em sử dụng IDE là Visual Studio Code phiên bản 1.75.1, sử dụng ngôn ngữ là Typescript (có thể coi là phiên bản nâng cấp của Javascript). Bảng dưới đây liệt kê những công cụ/thư viện cùng phiên bản sử dụng trong DATN:
+
+\begin{longtable}{|p{0.05\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|p{0.15\textwidth}|}
+\hline
+\textbf{STT} & \textbf{Công cụ/Thư viên} & \textbf{Mục đích} & \textbf{Phiên bản}  \\ \hline
+1 & @monaco-editor/react & Hỗ trợ viết mã nguồn & 4.4.6 \\ \hline
+2 & antd & Hỗ trợ xây dựng UI & 5.0.0 \\ \hline
+3 & antd-img-crop & Hỗ trợ cắt ảnh & 4.5.2 \\ \hline
+4 & axios & Hỗ trợ giao tiếp HTTP & 1.2.0 \\ \hline
+5 & classnames & Hỗ trợ viết tên class (CSS) gọn gàng hơn & 2.3.2 \\ \hline
+6 & dayjs & Hỗ trợ xử lý dữ liệu kiểu thời gian & 1.11.7 \\ \hline
+7 & dompurify & Hỗ trợ làm sạch dữ liệu HTML, bảo vệ trang web khỏi tấn công XSS & 2.4.1 \\ \hline
+8 & firebase & Hỗ trợ giao tiếp với Google Firebase & 9.17.1 \\ \hline
+9 & formik & Hỗ trợ kiểm tra tính hợp lệ của dữ liệu  & 2.2.9 \\ \hline
+10 & lodash & Cung cấp các hàm tiện ích cho lập trình Javascript  & 4.17.21 \\ \hline
+11 & react & Thư viện xây dựng giao diện người dùng & 18.2.0 \\ \hline
+12 & react-dom & Hỗ trợ React làm việc với DOM & 18.2.0 \\ \hline
+13 & react-countdown & Cung cấp component đếm ngược thời gian & 2.3.5 \\ \hline
+14 & react-error-boundary & Hỗ trợ xử lý lỗi ứng dụng & 3.1.4 \\ \hline
+15 & react-query & Quản lý trạng thái (state) phía server & 3.39.2 \\ \hline
+16 & react-quill & Hỗ trợ phần text editor cho ứng dụng & 2.0.0 \\ \hline
+17 & react-router-dom & Hỗ trợ định tuyến & 6.4.3 \\ \hline
+18 & react-syntax-highlighter & Giúp làm nổi bật mã nguồn & 15.5.0 \\ \hline
+18 & react-to-print & Hỗ trợ in ra một phần nào đó trên màn hình (lưu dưới dạng file) & 2.14.11 \\ \hline
+19 & recharts & Giúp biểu diễn dữ liệu dưới dạng biểu đồ & 2.3.2 \\ \hline
+20 & recoil & Quản lý trạng thái (state) phía client & 0.7.6 \\ \hline
+21 & recoil-persist & Quản lý trạng thái (state) và lưu trữ cục bộ (ví dụ lưu ở local storage) & 4.2.0 \\ \hline
+22 & uuid & Hỗ trợ sinh ra các chuỗi khác biệt nhau & 9.0.0 \\ \hline
+23 & yup & Hỗ trợ tạo các luật kiểm tra tính hợp lệ của dữ liệu & 0.32.11 \\ \hline
+24 & sass & Giúp viết mã nguồn CSS thuận tiện hơn & 1.56.1 \\ \hline
+25 & typescript & Giúp xây dựng mã nguồn ứng dụng một cách khoa học, rõ ràng hơn & 4.6.4 \\ \hline
+26 & vite & Công cụ build mã nguồn frontend & 4.0.4 \\ \hline
+27 & @types/react & Định nghĩa kiểu cho thư viện react & 18.0.17 \\ \hline
+28 & @types/react-dom & Định nghĩa kiểu cho thư viện react-dom & 18.0.6 \\ \hline
+29 & @vitejs/plugin-react & Plugin để vite build ứng dụng React & 3.0.1 \\ \hline
+30 & @types/dompurify & Định nghĩa kiểu cho thư viện dompurify & 2.4.0 \\ \hline
+31 & @types/react-syntax-highlighter & Định nghĩa kiểu cho thư viện react-syntax-highlighter & 15.5.6 \\ \hline
+32 & @types/uuid & Định nghĩa kiểu cho thư viện uuid & 9.0.0 \\ \hline
+33 & next & Framework của React  & 13.0.0 \\ \hline
+34 & react-intersection-observer & Hỗ trợ quan sát một thành phần nào đó bắt đầu hiển thị trên màn hình & 9.4.1 \\ \hline
+35 & @prisma/client & Công cụ sinh tự động các truy vấn SQL & 4.5.0 \\ \hline
+36 & bcrypt & Mã hóa dữ liệu & 5.1.0 \\ \hline
+37 & cloudinary & Thư viện giúp giao tiếp với nền tảng lưu trữ Cloudinary & 1.33.0 \\ \hline
+38 & cookie & Làm việc với cookie & 0.5.0 \\ \hline
+39 & cookie-parser & Hỗ trợ phân tích cookie & 1.4.6 \\ \hline
+40 & cors & Kiểm soát tài nguyên theo chính sách CORS & 2.8.5 \\ \hline
+41 & dotenv & Làm việc với các biến môi trường & 16.0.3 \\ \hline
+42 & express & Framework của NodeJS giúp xây dựng Restful API & 4.18.2 \\ \hline
+43 & jsonwebtoken & Sinh token như là định danh để truy cập hệ thống & 8.5.1 \\ \hline
+44 & multer & Làm việc với dữ liệu kiểu file & 1.4.5-lts.1 \\ \hline
+45 & nodemailer & Hỗ trợ thao tác với các mail server & 6.8.0 \\ \hline
+46 & prisma & Bộ công cụ ORM Prisma & 4.5.0 \\ \hline
+47 & tsconfig-paths & Làm việc với đường dẫn của các file/folder trong dự án & 4.1.0 \\ \hline
+48 & nodemon & Theo dõi sự thay đổi mã nguồn của ứng dụng & 2.0.20 \\ \hline
+49 & @types/bcrypt & Định nghĩa kiểu cho thư viện bcrypt & 5.0.0 \\ \hline
+50 & @types/cookie & Định nghĩa kiểu cho thư viện cookie & 0.5.1 \\ \hline
+51 & @types/cookie-parser & Định nghĩa kiểu cho thư viện cookie-parser & 1.4.3 \\ \hline
+52 & @types/cors & Định nghĩa kiểu cho thư viện cors & 2.8.12 \\ \hline
+53 & @types/express & Định nghĩa kiểu cho thư viện express & 4.17.14 \\ \hline
+54 & @types/jsonwebtoken & Định nghĩa kiểu cho thư viện jsonwebtoken & 8.5.9 \\ \hline
+55 & @types/multer & Định nghĩa kiểu cho thư viện multer & 1.4.7 \\ \hline
+56 & @types/node & Định nghĩa kiểu cho NodeJS & 18.11.2 \\ \hline
+57 & @types/nodemailer & Định nghĩa kiểu cho thư viện nodemailer & 6.4.7 \\ \hline
+58 & Mailtrap & Giả lập mail server &  \\ \hline
+59 & Cloudinary & Lưu trữ dữ liệu trên mây &  \\ \hline
+60 & Vercel & Triển khai mã nguồn frontend &  \\ \hline
+61 & Firebase Authentication & Dịch vụ xác thực người dùng & \\ \hline
+62 & Chrome Devtool & Công cụ hỗ trợ gỡ lỗi & \\ \hline
+63 & Postman & Công cụ hỗ trợ thử nghiệm API & \\ \hline
+64 & Digital Ocean App Platform & Triển khai mã nguồn backend & \\ \hline
+65 & Upcload & Triển khai cơ sở dữ liệu & \\ \hline
+66 & Novu & Hỗ trợ xây dựng tính năng thông báo & \\ \hline
+67 & Chatwoot & Hỗ trợ xây dựng tính năng chat & \\ \hline
+\caption{Danh sách thư viện và công cụ sử dụng}
+\end{longtable}
+
+\subsection{Minh họa các chức năng chính}
+\textbf{Giao diện màn tìm kiếm công việc:}
+Ở màn hình này, ứng viên có thể tìm kiếm công việc theo tên công việc, loại hình (toàn thời gian, bán thời gian), vị trí công việc và mức độ thành thạo (level).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/TimKiemCongViec.png}
+    \caption{Giao diện màn tìm kiếm công việc}
+\end{figure}
+
+\textbf{Giao diện màn nộp đơn ứng tuyển:}
+Ở màn hình này, ứng viên điền các thông tin cơ bản, chọn vị trí công việc muốn ứng tuyển và gửi đơn ứng tuyển.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/DangKyUngTuyen.png}
+    \caption{Giao diện màn nộp đơn ứng tuyển}
+\end{figure}
+
+\textbf{Giao diện màn danh sách hồ sơ ứng viên:}
+Ở màn hình này, quản trị viên xem được danh sách các đơn ứng tuyển (hay hồ sơ ứng viên). Quản trị viên có thể cập nhật các thông tin liên quan đến quá trình tuyển dụng ứng viên này như: Người phỏng vấn, thời gian phỏng vấn, đánh giá phân loại ứng viên (assessment).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/QuanLyUngVien.png}
+    \caption{Giao diện màn danh sách hồ sơ ứng viên}
+\end{figure}
+
+\textbf{Giao diện màn quản lý tài khoản:}
+Để đăng nhập vào hệ thống cần có tài khoản được quản trị viên cấp. Màn hình này hiển thị danh sách các tài khoản đang hoạt động, cho phép tạo tài khoản mới và chỉ định tài khoản cho ứng viên, nhân viên. Với trường hợp chỉ định tài khoản cho ứng viên, sau khi chỉ định thành công hệ thống sẽ gửi một email chứa thông tin tài khoản đó vào email cá nhân của ứng viên.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/QuanLyTaiKhoan.png}
+    \caption{Giao diện màn quản lý tài khoản}
+\end{figure}
+
+\textbf{Giao diện màn tạo bài kiểm tra kỹ năng:}
+Ở màn này, quản trị viên có thể tạo bài kiểm tra kỹ năng với hai chế độ: Tạo thủ công và tạo ngẫu nhiên. Với chế độ tạo bài kiểm tra ngẫu nhiên, quản trị viên có thể xem trước bài kiểm tra trước khi tạo. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/TaoBaiKiemTra.png}
+    \caption{Giao diện màn tạo bài kiểm tra kỹ năng}
+\end{figure}
+
+
+\textbf{Giao diện màn làm bài kiểm tra kỹ năng:}
+Sau khi được chỉ định một bài kiểm tra kỹ năng, ứng viên đăng nhập vào hệ thống và xác nhận làm bài kiểm tra. Màn này sẽ hiển thị danh sách câu hỏi dưới dạng đánh số thứ tự để giúp ứng viên di chuyển nhanh đến câu đó. Thời gian làm bài hiển thị dưới dạng đếm ngược, trước thời gian này ứng viên phải nộp bài, còn nếu vượt quá thời gian này hệ thống sẽ tự động nộp bài cho ứng viên. Ứng viên chỉ có thể làm bài kiểm tra một lần và sau khi làm xong có thể xem kết quả sơ bộ trên giao diện, hệ thống cũng tự động gửi một email thông báo về email của ứng viên.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/LamBaiKiemTra.png}
+    \caption{Giao diện màn làm bài kiểm tra kỹ năng}
+\end{figure}
+
+\textbf{Giao diện màn chi tiết kết quả bài kiểm tra:}
+Sau khi ứng viên hoàn thành bài kiểm tra, quản trị viên có thể xem chi tiết các câu trả lời của ứng viên. Quản trị viên có thể in kết quả này và lưu thành file PDF.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/ChiTietBaiKiemTraKyNang.png}
+    \caption{Giao diện màn chi tiết kết quả bài kiểm tra}
+\end{figure}
+
+\textbf{Giao diện màn danh sách hồ sơ nhân viên:}
+Ở màn này, quản trị viên có thể xem danh sách nhân viên và tìm kiếm nhân viên theo một số tiêu chí. Quản trị viên có thể xem chi tiết thông tin nhân viên, chỉ định nhân viên làm quản trị viên (chức năng này chỉ dành cho quản trị viên tối cao). 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/QuanLyHoSoNhanVien.png}
+    \caption{Giao diện màn danh sách hồ sơ nhân viên}
+\end{figure}
+
+\textbf{Giao diện màn danh sách request:}
+Màn hình này hiển thị danh sách các request của nhân viên. Quản trị viên có thể lọc tìm các request theo từ khóa, loại request và trạng thái. Quản trị viên có thể chấp nhận/hủy bỏ/xóa các request này. Với các request thuộc loại check in bù, check out bù thì sau khi quản trị viên chấp nhận hệ thống sẽ cập nhập lại thời gian check in, check out trong ngày tương ứng của nhân viên đó.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/DanhSachRequest.png}
+    \caption{Giao diện màn danh sách request}
+\end{figure}
+
+\textbf{Giao diện màn danh sách chương trình đào tạo:}
+Nhân viên có thể xem được danh sách toàn bộ chương trình đào tạo hoặc xem danh sách các chương trình đào tạo mà mình tham gia. Có thể xem chi tiết một chương trình đào tạo, tải các tài liệu học tập, đánh giá chương trình đào tạo (nếu nhân viên tham gia và chương trình đã diễn ra).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/QuanLyChuongTrinhDT.png}
+    \caption{Giao diện màn danh sách chương trình đào tạo}
+\end{figure}
+
+\textbf{Giao diện chat:}
+Tính năng này giúp ứng viên có thể trao đổi với bộ phận nhân sự của công ty.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Hinhve/TinhNangChat.png}
+    \caption{Giao diện chat}
+\end{figure}
+
+\textbf{Giao diện màn thống kê:}
+Màn hình này tổng hợp và hiển thị một số dữ liệu trong hệ thống dưới dạng các biểu đồ, danh sách những dữ liệu nổi bật nhất.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/AdminDashboard.png}
+    \caption{Giao diện màn thống kê}
+\end{figure}
+
+\textbf{Giao diện thông báo:}
+Đây là nơi chứa các thông báo trong ứng dụng, nhân viên có thể nhấn vào một thông báo để chuyển tới màn hình tương ứng. Sau khi nhấn vào một thông báo thì thông báo đó sẽ được đánh dấu là đã xem.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/ThongBao.png}
+    \caption{Giao diện thông báo}
+\end{figure}
+
+
+\section{Kiểm thử}
+Đồ án này sử dụng kiểm thử hộp đen (Black box testing) để kiểm thử các chức năng của hệ thống.
+
+\subsection{Kiểm thử chức năng "Thêm bài kiểm tra mới"}
+
+Bảng dưới đây mô tả các yêu cầu khi tạo một bài kiểm tra:
+\begin{longtable}{|p{0.05\textwidth}|p{0.25\textwidth}|p{0.6\textwidth}|}
+\caption{Mô tả yêu cầu tạo bài kiểm tra}
+\label{fig:AddInterview}
+\hline
+\textbf{STT} & \textbf{Trường dữ liệu} & \textbf{Yêu cầu}\\ \hline
+1 & Tiêu đề bài kiểm tra & Bắt buộc, định dạng văn bản \\ \hline
+2 & Thời gian làm bài & Bắt buộc, đinh dạng số nguyên dương và giá trị mặc định là 30 tính theo đơn vị phút \\ \hline
+3 & Mảng câu hỏi & Không bắt buộc, là một mảng chứa các id của các câu hỏi trong bài kiểm tra \\ \hline
+\end{longtable}
+Bảng dưới đây mô tả các trường hợp kiểm thử cho chức năng "Thêm bài kiểm tra mới":
+
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.09\textwidth}|}
+\caption{Kết quả kiểm thử cho chức năng "Thêm bài kiểm tra mới"}
+\hline
+\textbf{STT} & \textbf{Testcase} & \textbf{Dữ liệu đầu vào} & \textbf{Kết quả mong đợi} & \textbf{Trạng thái} \\ \hline
+1 & Nhập đầy đủ thông tin hợp lệ và bấm nút "Tạo bài kiểm tra" & Các trường thông tin theo đúng yêu cầu & Thông báo tạo bài kiểm tra thành công & Đạt \\ \hline
+2 & Để trống tiêu đề hoặc thời gian làm bài & Thông tin thiếu tiêu đề hoặc thời gian làm bài & Không tạo được bài kiểm tra, hiển thị thông báo "Tiêu đề và thời gian làm bài là bắt buộc" & Đạt \\ \hline
+3 & Kiểm tra hiển thị bảng chọn câu hỏi ở chế độ tạo bài kiểm tra thủ công & Chế độ tạo bài kiểm tra thủ công & Hiển thị thư viện câu hỏi, cho phép lọc câu hỏi và lọc chính xác & Đạt \\ \hline
+4 & Kiểm tra hiển thị bảng chọn câu hỏi ở chế độ tạo bài kiểm tra ngẫu nhiên & Chế độ tạo bài kiểm tra ngẫu nhiên & Hiển thị bảng các chủ đề câu hỏi, với từng chủ đề hiển thị số lượng câu theo mức độ & Đạt \\ \hline
+5 & Bấm nút "Xem thông tin bài kiểm tra" ở chế độ tạo bài kiểm tra thủ công  & Chế độ tạo bài kiểm tra thủ công, chọn một ít nhất một câu hỏi và bấm nút "Xem thông tin bài kiểm tra" & Hiển thị khay thông tin chứa thông tin sơ bộ của các câu hỏi đã chọn & Đạt \\ \hline
+6 & Bấm nút "Xóa câu hỏi" ở chế độ tạo bài kiểm tra thủ công & Chế độ tạo bài kiểm tra thủ công, chọn một ít nhất một câu hỏi và bấm nút "Xem thông tin bài kiểm tra". Chọn nút "Xóa câu hỏi" của một câu hỏi bất kỳ & Xóa câu hỏi khỏi danh sách & Đạt \\ \hline
+7 & Bấm nút "Xem trước bài kiểm tra" ở chế độ tạo bài kiểm tra thủ công & Chế độ tạo bài kiểm tra thủ công, chọn một ít nhất một câu hỏi và bấm nút "Xem thông tin bài kiểm tra". Chọn nút "Xem trước bài kiểm tra" & Hiển thị modal chứa tất cả các câu hỏi đã chọn một cách chi tiết & Đạt \\ \hline
+8 & Bấm nút "Tạo bài kiểm tra ngẫu nhiên" khi chưa chọn chủ đề ở chế độ tạo bài kiểm tra ngẫu nhiên & Chọn chế độ tạo bài kiểm tra ngẫu nhiên, không chọn chủ đề nào cả & Nút tạo bài kiểm tra ngẫu nhiên bị vô hiệu hóa & Đạt \\ \hline
+9 & Bấm nút "Tạo bài kiểm tra ngẫu nhiên" khi chọn ít nhất một chủ đề ở chế độ tạo bài kiểm tra ngẫu nhiên & Chọn chế độ tạo bài kiểm tra ngẫu nhiên, chọn ít nhất một chủ đề & Nút tạo bài kiểm tra ngẫu nhiên có thể tương tác, khi bấm vào hiển thị modal chứa các câu hỏi ngẫu nhiên một cách chi tiết & Đạt \\ \hline
+10 & Nhập số lượng câu hỏi không phải số nguyên không âm trong các ô input ở chế độ tạo bài kiểm tra ngẫu nhiên & Chọn chế độ tạo bài kiểm tra ngẫu nhiên, tại một ô input nhập chữ hoặc các số không phải số nguyên không âm & Ô input không nhận giá trị đó mà lấy giá trị mặc định là 0 & Đạt \\ \hline
+\end{longtable}
+
+\subsection{Kiểm thử chức năng "Thêm request mới"}
+
+Bảng dưới đây mô tả các yêu cầu khi tạo một request:
+\begin{longtable}{|p{0.05\textwidth}|p{0.25\textwidth}|p{0.6\textwidth}|}
+\caption{Mô tả yêu cầu tạo request}
+\label{fig:AddInterview}
+\hline
+\textbf{STT} & \textbf{Trường dữ liệu} & \textbf{Yêu cầu}\\ \hline
+1 & Loại request & Bắt buộc, định dạng số nguyên dương \\ \hline
+2 & Ngày & Bắt buộc, đinh dạng ngày tháng năm \\ \hline
+3 & Thời gian bắt đầu & Bắt buộc với một số loại request  \\ \hline
+4 & Thời gian kết thúc & Bắt buộc với một số loại request  \\ \hline
+5 & Lý do & Bắt buộc, định dạng văn bản  \\ \hline
+\end{longtable}
+Bảng dưới đây mô tả các trường hợp kiểm thử cho chức năng "Thêm bài kiểm tra mới":
+
+\begin{longtable}{|p{0.05\textwidth}|p{0.2\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.09\textwidth}|}
+\caption{Kết quả kiểm thử cho chức năng "Tạo request mới"}
+\hline
+\textbf{STT} & \textbf{Testcase} & \textbf{Dữ liệu đầu vào} & \textbf{Kết quả mong đợi} & \textbf{Trạng thái} \\ \hline
+1 & Nhập đầy đủ thông tin hợp lệ và bấm nút "Tạo request" & Các trường thông tin theo đúng yêu cầu & Thông báo tạo request thành công & Đạt \\ \hline
+2 & Điền thiếu một thông tin bắt buộc và bấm nút "Tạo request" & Để trống một trường bắt buộc & Không tạo request, hiển thị thông báo các trường bỏ trống là bắt buộc & Đạt \\ \hline
+3 & Chọn request loại check in hoặc check out & Request loại check in hoặc check out & Hiển thị thêm trường thời gian & Đạt \\ \hline
+4 & Chọn request loại làm thêm giờ & Request loại làm thêm giờ & Hiển thị thêm trường thời gian bắt đầu và trường thời gian kết thúc & Đạt \\ \hline
+5 & Tạo request cùng loại và cùng ngày với một request khác và bấm "Tạo request" & Request có loại và ngày giống một request đã tạo trước đó & Không tạo request, hiển thị thông báo không thể tạo request với lý do trong ngày đó có request cùng loại & Đạt \\ \hline
+\end{longtable}
+
+\section{Triển khai}
+Phần giao diện thực hiện bằng ReactJS và NextJS, em thực hiện triển khai lên Vercel. Nền tảng này hỗ trợ 20 lượt triển khai miễn phí mỗi tháng, 1GB băng thông miễn phí và 1GB bộ nhớ miễn phí mỗi tháng. Phần API viết bằng NodeJS và ExpressJS được triển khai trên Digital Ocean App Platform với cấu hình 1GB RAM, 1vCPU. Cuối cùng là phần Database được triển khai bằng Docker trên một máy chủ Upcloud.
+
+\begin{longtable}{|p{0.2\textwidth}|p{0.7\textwidth}|}
+\caption{Bảng đường dẫn triển khai của hệ thống}
+\hline
+\textbf{Thành phần} & \textbf{Đường dẫn} \\ \hline
+Giao diện viết bằng NextJS & https://employee-management-fe-next.vercel.app \\ \hline
+Giao diện viết bằng ReactJS & https://employee-management-fe-react.vercel.app \\ \hline
+Server & https://employee-management-fe-react.vercel.app \\ \hline
+Cơ sở dữ liệu & mysql://root:password@95.111.197.39:3307/my\_hrm\_db \\ \hline
+\end{longtable}
+
+\section{Đánh giá hệ thống}
+Tiếp theo, em thực hiện đánh giá hệ thống bằng công cụ Lighthouse, một công cụ do Google phát triển, giúp đánh giá trang web dựa trên các tiêu chí: Hiệu suất (Performance), khả năng truy cập (Accessibility), cách thực hành tốt nhất (Best Practices), khả năng tối ưu hóa công cụ tìm kiếm (SEO), khả năng tương thích PWA (Progressive Web App) và đưa ra phân tích đánh giá và những gợi ý thay đổi, từ đó lập trình viên sẽ thấy được những điểm chưa tốt và cải tiến để nâng cao hiệu suất của trang web.
+
+Kết quả đánh giá hệ thống bằng Lighthouse với hai trang web như sau:
+Trang web viết bằng NextJS:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/LightHouseNext.png}
+    \caption{Kết quả đánh giá Lighthouse giao diện viết bằng NextJS}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Hinhve/LightHouseReact.png}
+    \caption{Kết quả đánh giá Lighthouse giao diện viết bằng ReactJS}
+\end{figure}
+
+Kết quả ở phía trên cho thấy, điểm hiệu năng của giao diện viết bằng ReactJS chỉ ở mức khá. Đây chính là một lưu ý để cải thiện ứng dụng trong tương lai. Tuy nhiên một cách tổng quan, hệ thống đã đạt được các yêu cầu phi chức năng đã đề ra: 
+
+\begin{itemize}
+    \item Yêu cầu bảo mật: Hệ thống có phân quyền người dùng, đảm bảo mỗi người dùng chỉ có thể truy cập vào tài nguyên được cho phép
+    \item Yêu cầu giao diện: Giao diện đơn giản, tập trung vào tính năng, tạo cảm giác thuận tiện khi sử dụng
+    \item Mã nguồn được chia nhỏ thành các module có tính tái sử dụng, đáp ứng yêu cầu có khả năng mở rộng, nâng cấp và bảo trì
+\end{itemize}
+\end{document}

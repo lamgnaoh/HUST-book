@@ -1,0 +1,47 @@
+\documentclass[../DoAn.tex]{subfiles}
+\begin{document}
+\section{Đặt vấn đề}
+\label{section:1.1}
+Từ một báo cáo của chính phủ Đức vào năm 2013 đã làm xuất hiện một cụm từ mà cho đến ngày nay đã rất đỗi quen thuộc: "\textbf{Công nghệ 4.0}". Sự phát triển của của công nghệ 4.0 đã đem đến rất nhiều sự thay đổi trông thấy trong tất cả các lĩnh vực của cuộc sống. Công nghệ 4.0 có thể được ứng dụng vào bất cứ lĩnh vực nào, chẳng hạn như trong sự vận hành của các công ty mà một trong những vấn đề lớn là nhu cầu tuyển dụng và quản lý nhân sự. Mỗi công ty lại có một quy trình tuyển dụng riêng, có một cách thức quản lý nhân sự riêng nhưng không phải quy trình, cách thức nào cũng hiệu quả. Sự hoạt động ở khâu tuyển dụng và quản lý nhân sự rất quan trọng, nó thể hiện sự chuyên nghiệp của công ty trong mắt ứng viên hay là đem đến sự hài lòng cho các nhân viên đang làm việc tại công ty, mà chính những điều ấy sẽ được lan tỏa đến những nhân sự trong tương lai khi họ tìm hiểu về công ty. Vì vậy, rất nhiều công ty có chiến lược ứng dụng công nghệ 4.0, cụ thể là ứng dụng kiến thức về mạng và máy tính để xây dựng các hệ thống hỗ trợ tuyển dụng và quản lý nhân sự như là một trợ giúp đắc lực cho bộ phận nhân sự của công ty. Với sự tìm hiểu như vậy, em đã quyết định chọn lựa đề tài "\textbf{Xây dựng hệ thống hỗ trợ tuyển dụng và quản lý nhân sự cho công ty}" để thực hiện DATN.
+
+\section{Mục tiêu và phạm vi đề tài}
+\label{section:1.2}
+Hiện nay trên thị trường đã xuất hiện nhiều hệ thống hỗ trợ tuyển dụng (ATS) cũng như hệ thống hỗ trợ quản lý nhân sự (HRIS). Hai kiểu hệ thống này lại có thể kết hợp với nhau thành chỉ một hệ thống. Một số ứng dụng kết hợp như vậy cũng đã có mặt trên thị trường. Các sản phẩm nhìn chung đều có các chức năng cơ bản, phù hợp với đại đa số công ty, đồng thời có những tính năng nâng cao hỗ trợ cho những công việc đặc thù và tùy thuộc vào nhu cầu của mỗi công ty. Tuy nhiên các hệ thống ấy thường rất phức tạp nên chi phí cao và không phải công ty nào cũng sử dụng hết các chức năng mà các hệ thống đó cung cấp. Đồ án này thực hiện một số khảo sát về một số hệ thống cũng như khảo sát nhu cầu của một số công ty và sẽ được trình bày chi tiết hơn ở phần 2.1.
+
+Qua những phân tích ở phía trên, em thấy rằng các công cụ đã có khá phức tạp về mặt chức năng, em cũng mong muốn bổ sung tính năng khác cho hệ thống của mình và tất cả thực hiện trong một quỹ thời gian có hạn. Vì thế ở DATN này, em hướng tới đơn giản hóa hệ thống, phát triển thành một công cụ hỗ trợ cho những công việc cơ bản liên quan đến tuyển dụng và quản lý nhân sự với những chức năng chính như sau:
+\begin{itemize}
+\item Tìm kiếm việc làm
+\item Nộp đơn ứng tuyển
+\item Quản lý các công việc cần tuyển
+\item Quản lý hồ sơ ứng viên
+\item Làm bài kiểm tra kỹ năng
+\item Quản lý hồ sơ nhân viên
+\item Quản lý chấm công
+\item Quản lý các chương trình đào tạo
+\item Gửi email tự động và thông báo trong ứng dụng
+\item Báo cáo thống kê
+\item Tăng cường trải nghiệm
+\end{itemize}
+
+Về việc xây dựng hệ thống sẽ được trình bày chi tiết ở chương 4.
+
+\section{Định hướng giải pháp}
+\label{section:1.3}
+
+Về định hướng, hệ thống hướng tới hỗ trợ ba đối tượng chính là ứng viên (những người đang có nhu cầu tìm kiếm việc làm ở công ty), nhân viên (những người đang làm việc tại công ty) và quản trị viên (bộ phận HRM). Về phương pháp, em sẽ sử dụng mô hình phát triển phần mềm là mô hình phân lớp. Các công nghệ sử dụng trong dự án sẽ là những công nghệ hỗ trợ ngôn ngữ Javascript chủ yếu dùng để phát triển ứng dụng web như dùng môi trường NodeJS với framework ExpressJS để xây dựng Restful API, ReactJS để xây dựng giao diện theo hướng SPA nhằm tối ưu trải nghiệm hay framework NextJS để tăng điểm SEO cho trang web trên các công cụ tìm kiếm,... Việc chọn lựa các công nghệ hỗ trợ cùng một ngôn ngữ lập trình cũng giúp cho việc phát triển phần mềm, quản lý mã nguồn được thuận tiện hơn. Trong quá trình thực hiện, các yêu cầu chưa được xác định rõ ràng ngay từ đầu nên đồ án lựa chọn quy trình vừa phát triển, vừa kiểm thử và cải thiện. Đồ án xây dựng tính năng làm bài kiểm tra kỹ năng là một trong những tính năng nổi bật, ngoài ra thực hiện liên kết với một số hệ thống khác nhằm giải quyết một số bài toán khó (Chi tiết sẽ được trình bày ở chương 5). Kết quả cuối cùng là một sản phẩm có những tính năng cơ bản, đáp ứng những yêu cầu chức năng và phi chức năng đã đề ra.
+
+\section{Bố cục đồ án}
+\label{section:1.4}
+Phần còn lại của báo cáo đồ án tốt nghiệp này được tổ chức như sau. 
+
+Chương 2 thực hiện khảo sát và phân tích yêu cầu hệ thống. Chương này sẽ khảo sát một số giải pháp hiện có, phân tích và rút ra những ưu nhược điểm, từ đó xác định yêu cầu chức năng, phi chức năng của hệ thống này cũng như đặc tả yêu cầu của một số chức năng chính.
+
+Chương 3 sẽ trình bày các công nghệ sử dụng trong đồ án.
+
+Chương 4 sẽ trình bày về việc thiết kế hệ thống bao gồm kiến trúc hệ thống, thiết kế tổng quan hệ thống, thiết kế chi tiết bao gồm thiết kế cơ sở dữ liệu và thiết kế giao diện người dùng, tiếp theo sẽ trình bày việc xây dựng ứng dụng, kiểm thử hệ thống, triển khai hệ thống và cuối cùng là đánh giá hệ thống.
+
+Chương 5 sẽ trình bày các giải pháp và đóng góp nổi bật của đồ án này.
+
+Chương 6 trình bày kết luận về những gì đã làm được, chưa làm được và những kiến thức, kỹ năng mới qua quá trình làm đồ án. Đồng thời trình bày một số hướng cải tiến và phát triển đồ án trong tương lai.
+
+\end{document}
